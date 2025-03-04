@@ -1,4 +1,6 @@
 {
+    "versicode": 256,
+    
     "narrativeqa": 128,
     "qasper": 128,
     "multifieldqa_en": 64,

@@ -51,6 +51,7 @@ dataset2metric = {
     "multifieldqa_en": qa_f1_score,
     "multifieldqa_zh": qa_f1_zh_score,
     "hotpotqa": qa_f1_score,
+
     "2wikimqa": qa_f1_score,
     "musique": qa_f1_score,
     "dureader": rouge_zh_score,
@@ -68,7 +69,8 @@ dataset2metric = {
     "lcc": code_sim_score,
     "repobench-p": code_sim_score,
     "narrativeqa-full": qa_f1_score,
-    
+    # Versicode
+    "versicode": qa_f1_score,
     # Retrieve
     "kv_retrieval": get_score_one_kv_retrieval,
     "kv_retrieval_prefix": get_score_one_kv_retrieval,
