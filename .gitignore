@@ -5,3 +5,5 @@ em_llm.egg-info
 *result.json
 *.log
 offload_data
+
+!benchmark/data/longbench/versicode
