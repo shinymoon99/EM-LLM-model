@@ -370,9 +370,17 @@ def get_pred(
     preds = []
     data = list(data)
 
+    # pred运行区间
+    from benchmark.config.code.config import VSCC_LOW_BOUND,VSCC_HIGH_BOUND
+    data = data[VSCC_LOW_BOUND:VSCC_HIGH_BOUND]
+
     if world_size is not None:
         data = data[rank::world_size]
-
+    
+    # 添加context
+    from benchmark.other_pred import appendContextToData
+    data = [appendContextToData(json_obj) for json_obj in data]
+    
     cur = 0
     total = len(data)
 
@@ -383,7 +391,10 @@ def get_pred(
         nlp.max_length = 2147483647
 
     sent_len = []
+
+
     for json_obj in tqdm(data):
+        
 
         cur_id = get_id(cur)
 

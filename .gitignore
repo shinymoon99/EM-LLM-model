@@ -1,9 +1,10 @@
 __pycache__
+chroma_data
 benchmark/data
 em_llm.egg-info
 *.jsonl
 *result.json
 *.log
 offload_data
-
+!benchmark/data/longbench
 !benchmark/data/longbench/versicode

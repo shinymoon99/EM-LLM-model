@@ -1,0 +1,6 @@
+CORPUS_PATH = "/mnt/d/codes/Corpus/library_source_code/version_corpus/"
+VSCC_LOW_BOUND = 6
+VSCC_HIGH_BOUND = 10
+RAG_DOCUMENT_NUM = 2
+FC_MAX_TOKEN_LENGTH = 2000
+RAG_MAX_TOKEN_LENGTH = 2000

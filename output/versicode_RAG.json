@@ -1,0 +1,12 @@
+[
+    {
+        "id": "downstream_application_code_block_6",
+        "answer": " <start>\n\n```python\nimport numpy as np\n\ndef flip_mask(mask):\n    total = np.sum(mask)\n    if len(mask) == total:\n        index = np.random.randint(len(mask))\n        mask[index] = 1 - mask[index]\n    return mask\n<end>",
+        "ground_truth": "import numpy as np\n\ndef mask_safe(mask):\n    tot_len = mask.shape[0]\n    mask_cnt = np.sum(mask.astype(np.int32))\n    range_i = np.arange(tot_len)\n    \n    if tot_len == mask_cnt or mask_cnt == 0:\n        idx = np.random.choice(range_i)\n        mask[idx] = 1 - mask[idx]\n    \n    return mask"
+    },
+    {
+        "id": "downstream_application_code_block_7",
+        "answer": " <start>\nimport torch\n\ndef delete_noisy_char(s):\n    return ''.join(filter(str.isalnum, s))\n\ndef extend_vocab(vocab, token, vector):\n    vocab[token] = vector\n<end>",
+        "ground_truth": "import torch\n\ndef delete_noisy_char(s):\n    s = (\n        s.replace(\",\", \" \")\n        .replace(\"/\", \" \")\n        .replace('\"', \" \")\n        .replace(\"-\", \" \")\n        .replace(\";\", \" \")\n        .replace(\".\", \" \")\n        .replace(\"&\", \" \")\n        .replace(\"?\", \" \")\n        .replace(\"!\", \" \")\n        .replace(\"(\", \" \")\n        .replace(\")\", \" \")\n    )\n    s = s.strip()\n    return s\n\ndef extend_vocab(pretrained_vocab, token, vector):\n    pretrained_vocab.itos.extend([token])\n    pretrained_vocab.stoi[token] = pretrained_vocab.vectors.shape[0]\n    pretrained_vocab.vectors = torch.cat([pretrained_vocab.vectors, vector], dim=0)\n\n\n"
+    }
+]

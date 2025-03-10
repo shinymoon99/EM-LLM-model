@@ -2,18 +2,6 @@
   "citation": "",
   "description": "",
   "features": {
-    "input": {
-      "dtype": "string",
-      "_type": "Value"
-    },
-    "context": {
-      "dtype": "string",
-      "_type": "Value"
-    },
-    "answer": {
-      "dtype": "string",
-      "_type": "Value"
-    },
     "dependency": {
       "dtype": "string",
       "_type": "Value"
@@ -22,15 +10,27 @@
       "dtype": "string",
       "_type": "Value"
     },
+    "time": {
+      "dtype": "string",
+      "_type": "Value"
+    },
     "description": {
       "dtype": "string",
       "_type": "Value"
     },
-    "length": {
-      "dtype": "int64",
+    "code": {
+      "dtype": "string",
       "_type": "Value"
     },
-    "dataset": {
+    "masked_line": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "answer": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "granularity": {
       "dtype": "string",
       "_type": "Value"
     },
@@ -38,11 +38,23 @@
       "dtype": "string",
       "_type": "Value"
     },
-    "all_classes": {
-      "dtype": "null",
+    "task": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "source": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "answers": {
+      "dtype": "string",
       "_type": "Value"
     },
     "_id": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "context": {
       "dtype": "string",
       "_type": "Value"
     }

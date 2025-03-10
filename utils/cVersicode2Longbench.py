@@ -3,15 +3,16 @@ from datasets import Dataset
 
 def edit_data():
     # Read the original data
-    with open('data/da_block_originprompt_lscContext.json', 'r') as f:
+    with open('benchmark/data/VersiCode_Benchmark/blockcode_completion.json', 'r') as f:
         data = json.load(f)
 
     # Create the projection
     projection = []
     for item in data:
         projected_item = item.copy()
-        projected_item["answer"] = item["masked_code"]
+        projected_item["answers"] = "code"
         projected_item["_id"] = item["id"]
+        projected_item["context"] = ""
         # remove "id" and "masked_code"
         del projected_item["id"]
         del projected_item["masked_code"]
@@ -29,5 +30,6 @@ def convert2dataset(data_path,target_path):
     dataset = Dataset.from_list(data)
     dataset.save_to_disk(target_path)
 if __name__ == "__main__":
+    # edit_data()
     convert2dataset('data/versicode.json', 'benchmark/data/longbench/versicode')
     
