@@ -16,17 +16,32 @@
       - [x] 目前看来，保留数据在longbench中的分类可行。但要多一步转换，不保留context,在get_pred时加上
         - [x] 将数据依然转换为EM-LLM的需求格式，但不提供context
         - [x] 在EM-LLM get_pred时获取对应于dependency和version的外部知识文档
-    - [ ] 跑一部分的result
+    - [x] 跑一部分的result
   - [x] eval
     - [x] 加入versicode的评测指标，对于三种技术路线的result进行评测
-
+  - [x] VACE prompt的添加
+  - [ ] 修正em-llm最后结果，似乎没跑完。相比RAG少几条数据。保持和FC与RAG的一致性
+  - [ ] VACE上测试5-6条
+    - [ ] FC&RAG
+    - [ ] MEMORY
 - [ ] versiBCB的实验架构
-  - [ ] versiBCB的数据转换到VACE和VSCC
+  - [x] versiBCB的数据转换到VACE和VSCC
   - [ ] versiBCB的实验架构(估计在versicode的dataloader基础上做一些adaptor即可)
-    - [ ] dataloader
+    - [ ] (optional)emllm的pred没有对多个package做文档自适应切分，不统一
+    - [ ] 改用行数对于package分配可用的token数
+    - [x] dataloader
+      - [x] prompt的修改
+      - [x] 获取context的变更
     - [ ] eval(采用直接创建环境进行结果评测)
+  - [ ] versiBCB上测试
+    - [ ] vscc
+      - [ ] FC&RAG
+      - [ ] MEMORY
+    - [ ] vace
+      - [ ] FC&RAG
+      - [ ] MEMORY
 - [ ] MoE实验的补充
 - [ ] 完成对于versicode和versiBCB的所有知识文档的收集
-    - [ ] 获取指定depdendency:version的doc的脚本构建
+    - [ ] 获取指定depdendency:version的doc的脚本构建(pydoc)
     - [ ] versicode所有block级别的library的doc
     - [ ] versiBCB所有数据的doc

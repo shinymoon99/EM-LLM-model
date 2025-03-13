@@ -4,9 +4,9 @@ import json
 if __name__ == "__main__":
     with open("benchmark/data/VersiCode_Benchmark/code_editing/code_editing_new_to_old.json", "r") as f:
         data = json.load(f)
-
-    # print(data)
-    for data_piece in data["data"]:
-        if data_piece["language"] == "java":
-            print(data_piece)
-            break
+    print(data["data"][0])
+    # # print(data)
+    # for data_piece in data["data"]:
+    #     if data_piece["language"] == "java":
+    #         print(data_piece)
+    #         break
