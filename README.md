@@ -46,6 +46,16 @@ pip install -r "${base_dir}/requirements.txt"
 pip install -e "${base_dir}/."
 ```
 
+### Authentication
+
+To use models from Hugging Face Hub, you need to set up authentication:
+
+1. Create a token at https://huggingface.co/settings/tokens
+2. Configure your token using one of these methods:
+   - Set the `HF_TOKEN` environment variable: `export HF_TOKEN=your_token_here`
+   - Edit the `config/auth.yaml` file and add your token
+   - Place your token in a file at `~/tokens/hf.txt` (legacy method)
+
 The YAML files used for configuration can be found in the `config/` directory. 
 
 Here is a breakdown of each parameter included in these files:

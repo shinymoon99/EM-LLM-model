@@ -3,7 +3,8 @@
 2.关于数据，数据无论外置还是内置差不多，就是多个adaptor
 
 使用带template的prompt作为配置文件，输入versicode benchmark，实时转换出对应的fillin
-
+# question
+- [ ] 不太理解，为什么使用uniform=False开启surprise就不会OOM了。uniform=true原本不都是按照最大512token slice么。false应该会比true更占据空间呀？
 
 # todo
 - [ ] 完成versicode的实验架构
@@ -12,7 +13,7 @@
     - [x] (optional)对于RAG，进行长期缓存，防止重新创建
       - [x] doc的划分似乎存在问题，\n可能有问题，可能是一行内本身存在\n
       - [x] 输出部分的提示存在问题，不清楚输出语义
-    - [x] (optional)对于EM-LLM,对于数据加载部分修改，使context能外部化
+    - [x] (optional)对于EM-LLM,对于数据加载部分修改，使context能外部化pao
       - [x] 目前看来，保留数据在longbench中的分类可行。但要多一步转换，不保留context,在get_pred时加上
         - [x] 将数据依然转换为EM-LLM的需求格式，但不提供context
         - [x] 在EM-LLM get_pred时获取对应于dependency和version的外部知识文档

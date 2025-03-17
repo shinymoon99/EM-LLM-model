@@ -14,7 +14,38 @@ import time
 import numpy as np
 from datetime import datetime
 import pprint as pp
+from huggingface_hub import login
+from pathlib import Path
 
+# Load Hugging Face token from config or environment variable
+def load_hf_token():
+    # Try environment variable first
+    if os.environ.get("HF_TOKEN"):
+        return os.environ.get("HF_TOKEN")
+    
+    # Try config file
+    config_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config", "auth.yaml")
+    if os.path.exists(config_path):
+        try:
+            auth_config = OmegaConf.load(config_path)
+            if hasattr(auth_config, "hf_token") and auth_config.hf_token:
+                return auth_config.hf_token
+        except Exception as e:
+            print(f"Warning: Failed to load auth config: {e}")
+    
+    # Try legacy path as fallback
+    token_path = os.path.expanduser("~/tokens/hf.txt")
+    if os.path.exists(token_path):
+        with open(token_path, "r") as file:
+            return file.read().strip()
+    
+    print("Warning: No Hugging Face token found. Some operations may fail.")
+    return None
+
+# Login to Hugging Face
+token = load_hf_token()
+if token:
+    login(token=token)
 
 def print_dict(d, indent=0):
     for key, value in d.items():
@@ -371,15 +402,16 @@ def get_pred(
     data = list(data)
 
     # pred运行区间
-    from benchmark.config.code.config import VSCC_LOW_BOUND,VSCC_HIGH_BOUND
-    data = data[VSCC_LOW_BOUND:VSCC_HIGH_BOUND]
+    from benchmark.config.code.config import VSCC_LOW_BOUND,VSCC_HIGH_BOUND,EMLLM_MAX_TOKEN_LENGTH
+    # data = data[VSCC_LOW_BOUND:VSCC_HIGH_BOUND]
 
     if world_size is not None:
         data = data[rank::world_size]
     
     # 添加context
     from benchmark.other_pred import appendContextToData
-    data = [appendContextToData(json_obj) for json_obj in data]
+    # 加入tqdm进度条    
+    # data = [appendContextToData(json_obj,max_token_length=EMLLM_MAX_TOKEN_LENGTH) for json_obj in tqdm(data)]
     
     cur = 0
     total = len(data)
@@ -394,7 +426,7 @@ def get_pred(
 
 
     for json_obj in tqdm(data):
-        
+        json_obj = appendContextToData(json_obj,max_token_length=EMLLM_MAX_TOKEN_LENGTH)
 
         cur_id = get_id(cur)
 

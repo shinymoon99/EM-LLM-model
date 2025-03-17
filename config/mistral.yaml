@@ -4,7 +4,8 @@ return_block_size: true
 logging: true
 em_splitter: surprisal
 
-max_len: 2147483647
+# max_len: 2147483647
+max_len: 1000000
 chunk_size: 512
 conv_type: mistral-inst
 
@@ -12,7 +13,7 @@ extended_passkey: 1024
 
 model:
   type: em-llm
-  path: mistralai/Mistral-7B-Instruct-v0.2
+  path: /datanfs2/chenrongyi/hf/hub/models--mistralai--Mistral-7B-Instruct-v0.2/snapshots/3ad372fc79158a2148299e3318516c786aeded6c # mistralai/Mistral-7B-Instruct-v0.2
   min_block_size: 8
   max_block_size: 128
   n_init: 128

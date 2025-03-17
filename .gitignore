@@ -6,5 +6,8 @@ em_llm.egg-info
 *result.json
 *.log
 offload_data
+benchmark/config/code/config.py
+# Authentication configuration
+config/auth.yaml
 !benchmark/data/longbench
 !benchmark/data/longbench/versicode

@@ -47,7 +47,7 @@ echo "World size: $world_size"
 
 if [ "$benchmark" = "long-bench" ]; then
 #    datasets="2wikimqa,gov_report,hotpotqa,lcc,multi_news,multifieldqa_en,musique,narrativeqa,passage_retrieval_en,qasper,qmsum,repobench-p,samsum,trec,triviaqa"
-	 datasets="versicode_vace,versicode_vscc"
+	 datasets="versicode_vscc"
 elif [ "$benchmark" = "infinite-bench" ]; then
     datasets="code_debug,math_find,kv_retrieval,passkey,number_string,longbook_choice_eng"
 elif [ "$benchmark" = "passkey" ]; then

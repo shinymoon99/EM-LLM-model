@@ -7,8 +7,10 @@ from sentence_transformers import SentenceTransformer
 import re
 import tiktoken
 from tqdm import tqdm
-from benchmark.config.code.config import CORPUS_PATH,VSCC_LOW_BOUND,VSCC_HIGH_BOUND,RAG_DOCUMENT_NUM,FC_MAX_TOKEN_LENGTH,RAG_MAX_TOKEN_LENGTH
-with open("/mnt/d/API_KEYSET/togetherai.txt", "r") as f:
+from transformers import AutoTokenizer
+from utils.docTokenDistribute import distribute_doc_tokens,truncate_doc
+from benchmark.config.code.config import CORPUS_PATH,VSCC_LOW_BOUND,VSCC_HIGH_BOUND,RAG_DOCUMENT_NUM,FC_MAX_TOKEN_LENGTH,RAG_MAX_TOKEN_LENGTH,TOGETHER_API_KEY_PATH
+with open(TOGETHER_API_KEY_PATH, "r") as f:
     api_key = f.read()
 
 client = Together(api_key=api_key)
@@ -79,7 +81,7 @@ def getKnowledgeDocs(data,corpus_base=CORPUS_PATH,dataset="versicode",task="VSCC
         data: dict,数据
     Returns:
         knowledge_doc: list,知识文档 if dataset=="versicode"
-        knowledge_doc: dict,知识文档 if dataset=="versiBCB" dict[pack:list]。如果是sourcecode，list中每个元素代表一个文件的内容；如果是doc,则需要我们再思考切分
+        knowledge_doc: dict,知识文档 if dataset=="versiBCB" dict[pack:list]。如果是sourcecode，list中每个元素代表一个文件的内容；如果是doc,目前list每个元素代表一个class or func or data
     '''
     if dataset == "versicode":
         dependency = data["dependency"] if task == "VSCC" else data["target_dependency"]
@@ -117,7 +119,7 @@ def getKnowledgeDocs(data,corpus_base=CORPUS_PATH,dataset="versicode",task="VSCC
     else:
         raise "Wrong dataset"
     return knowledge_docs
-def appendContextToData(data):
+def appendContextToData(data,tokenizer=AutoTokenizer.from_pretrained("/datanfs2/chenrongyi/hf/hub/models--mistralai--Mistral-7B-Instruct-v0.2/snapshots/3ad372fc79158a2148299e3318516c786aeded6c"),max_token_length=2000):
     '''
     Description:
         当context为空时，将context添加到data中
@@ -128,10 +130,12 @@ def appendContextToData(data):
     '''
     if data["context"] == "":
         knowledge_docs = getKnowledgeDocs(data)
-        if isinstance(knowledge_docs,dict):
+        if isinstance(knowledge_docs,dict):#versiBCB
+            knowledge_docs = distribute_doc_tokens(knowledge_docs,max_token_length,tokenizer)
             data["context"] = "\n".join(knowledge_docs[pack] for pack in knowledge_docs)
-        else:
-            data["context"] = "\n".join(knowledge_docs)
+        else:#versicode
+            knowledge_doc = truncate_doc("\n".join(knowledge_docs),max_token_length,tokenizer)
+            data["context"] = knowledge_doc
     return data
 
 

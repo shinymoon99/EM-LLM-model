@@ -3,16 +3,23 @@ from torch.utils.data import Dataset, DataLoader
 import json
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-Coder-V2-Lite-Base", trust_remote_code=True)
+# tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-Coder-V2-Lite-Base", trust_remote_code=True)
 # 自定义 Dataset
 class TextDataset(Dataset):
-    def __init__(self, texts, tokenizer, block_size=128):
+    def __init__(self, texts, tokenizer, block_size=128,pkg=None,version=None):
         self.tokenizer = tokenizer
         self.block_size = block_size
+        self.pkg = pkg
+        self.version = version
         self.input_ids = self._tokenize_and_chunk(texts)
 
     def _tokenize_and_chunk(self, texts):
         textid2inputids = [] # list of inputids,每
+
+        pkg_tokens = self.tokenizer.tokenize(self.pkg)
+        version_tokens = self.tokenizer.tokenize(self.version)
+        pkg_version_tokens = pkg_tokens + version_tokens
+        pkg_version_tokens_ids = self.tokenizer.convert_tokens_to_ids(pkg_version_tokens)
         for text in texts:
             tokens = self.tokenizer.tokenize(text)
             textid2inputids.append(self.tokenizer.convert_tokens_to_ids(tokens))
@@ -20,7 +27,7 @@ class TextDataset(Dataset):
         text_chunks = []
         for textid2inputid in textid2inputids:
             chunks = [
-                textid2inputid[i : i + self.block_size]
+                pkg_version_tokens_ids + textid2inputid[i : i + self.block_size]
                 for i in range(0, len(textid2inputid), self.block_size)
             ]
             text_chunks.extend(chunks)

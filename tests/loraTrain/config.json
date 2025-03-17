@@ -1,6 +1,26 @@
 {
-    "model_name": "mistralai/Mistral-7B-v0.2",
-    "target_modules": ["up_proj"],
-    "target_layers": [0, 1, 2],
-    "save_path_base": "/datanfs2/chenrongyi/models/versiBCB/"
+    "model_name": "/datanfs2/chenrongyi/hf/hub/models--mistralai--Mistral-7B-Instruct-v0.2/snapshots/3ad372fc79158a2148299e3318516c786aeded6c",
+
+    "target_modules": ["down_proj"],
+    "target_layers": [24,25,26],
+    "r":8,
+    "alpha": 16,
+    "knowledge_type":"code",
+    "save_path_base": "/datanfs2/chenrongyi/models/versiBCB",
+    "num_models": 1,
+    "model_weights": [1],
+    "batch_size": 1,
+    "num_epochs": 1,
+    "learning_rate": 1e-4,
+    "device_map": "auto",
+
+    "dataset":"versicode",
+    "task":"vscc",
+    "test_prompt": "Hello, how are you?",
+    "versicode_vscc_prompt": "You are now a professional Python programming engineer. I will also provide you with a functional description and specific dependency package version.\nYour task is to write Python code that implements the described functionality using the specified dependency package and version.\n\nPlease only return the implementation code without any explanations.\n### Functionality description:\n{description}\n### Dependency and version:\n{dependency}=={version}\n ###code:\n",
+    
+    "versicode_vace_prompt": "You are now a professional Python programming engineer. I will provide you with a code snippet and a description of its functionality, including the dependencies and versions used in the code. Then, I will provide the same dependencies but with a specified new version. Your task is to refactor the code using the methods provided by the specified new version and return the refactored code.\nImportant Notes:\n\n. 1.If you encounter ambiguities or uncertainties due to missing external knowledge, clearly state any assumptions you are making to proceed with the refactoring.\n2. Your goal is to produce functional and optimized code that aligns with the new version of the dependencies, \n\nPlease only return the refactored code.\n\n### Functionality description of the code\n{description}\n### Dependency and old version\n{dependency}=={origin_version}\n### Old version code\n{origin_code}\n### Dependency and new version\n{dependency}=={target_version}\n\n### Refactored new code\n",
+    "versiBCB_vscc_prompt": "You are now a professional Python programming engineer. I will also provide you with a functional description and specific dependency package version.\nYour task is to write Python code that implements the described functionality using the specified dependency package and version.\n\nPlease only return the implementation code without any explanations. \n### Functionality description\n{description}\n### Dependency \n{dependency}\n###code:\n",
+    "versiBCB_vace_prompt":"You are now a professional Python programming engineer. I will provide you with a code snippet and a description of its functionality, including the dependencies and versions used in the code. Then, I will provide the same dependencies but with a specified new version. Your task is to refactor the code using the methods provided by the specified new version and return the refactored code.\nImportant Notes:\n\n. 1.If you encounter ambiguities or uncertainties due to missing external knowledge, clearly state any assumptions you are making to proceed with the refactoring.\n2. Your goal is to produce functional and optimized code that aligns with the new version of the dependencies. 3.Please only return the refactored code.\n\n\n\n### Functionality description of the code\n{description}\n### origin_dependency\n{origin_dependency}\n### Old version code\n{origin_code}\n### target Dependency\n{target_dependency}\n\n### Refactored new code\n",
+    "traindata_percentage": 0.001
 }
